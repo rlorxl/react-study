@@ -86,8 +86,8 @@ const titleChangeHandler = event => {
 };
 ```
 
-<br>
-### 배열 렌더링하기
+
+## 배열 렌더링하기
 
 ```js
 const App = () => {
