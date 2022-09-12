@@ -6,9 +6,11 @@ jsx : 자바스크립트를 확장한 문법
 
 1. 태그는 닫혀있어야 한다. `<div></div>` `<input />` `<Hello />`
 2. 두개 이상의 태그는 하나의 태그로 감싸져있어야 한다.
-   `function App() { return ( <> <Hello /> <div></div> </> ) }` - fragment </> : 비어있는 태그 (불필요하게 div를 쓰지 않고 빈태그로 감싸기 위해 사용한다.)
+   `function App() { return ( <> <Hello /> <div></div> </> ) }`
+   fragment </> : 비어있는 태그 (불필요하게 div를 쓰지 않고 빈태그로 감싸기 위해 사용한다.)
    >
-3. jsx 내부에서 변수나 함수를 사용할 때는 중괄호`{}`를 사용하고 중괄호 안에서는 기본적인 자바스크립트 코드를 실행할 수 있다.
+3. jsx 내부에서 변수나 함수를 사용할 때는 중괄호`{}`를 사용하고,
+   중괄호 안에서는 기본적인 자바스크립트 코드를 실행할 수 있다.
    ```js
    function App() {
      const name = 'react';
@@ -73,32 +75,33 @@ return React.createElement(
 - 컴포넌트란 UI를 재사용 가능한 개별적인 여러 조각으로 나눈 조각이다.
 - 컴포넌트를 재사용하려면 함수형태로 만들어 줘야한다. 그리고 컴포넌트는 항상 대문자로 시작해야 한다.
 
-1.  시작하기
-    src폴더 안에 Hello.js 라는 파일을 만들고 상단에 import React from ‘react’; 를 입력한다.
-    함수형태의 컴포넌트를 작성 후 최하단에는 export default Hello; 를 작성한다. (내보내기)
-    App.js 파일로 돌아가서 최상단에 import Hello from ‘./Hello’; 작성. (import 파일이름 from ‘상대경로')
-    방금만든 Hello.js파일을 불러온다. 그리고 부모 컴포넌트 (ex. function App() ) 안에 `<Hello />` 를 리턴한다.
-    `<Hello />`는 재사용이 가능한 ui의 조각이다.
+**1. 시작하기**
 
-    ````js
-    import Hello from './Hello';
+- src폴더 안에 Hello.js 라는 파일을 만들고 상단에 import React from ‘react’; 를 입력한다.
+- 함수형태의 컴포넌트를 작성 후 최하단에는 export default Hello; 를 작성한다. (내보내기)
+- App.js 파일로 돌아가서 최상단에 import Hello from ‘./Hello’; 작성. (import 파일이름 from ‘상대경로')
+- 방금만든 Hello.js파일을 불러온다. 그리고 부모 컴포넌트 (ex. function App() ) 안에 `<Hello />` 를 리턴한다.
+  `<Hello />`는 재사용이 가능한 ui의 조각이다.
 
-        function App() {
-          return (
-            <>
-              <div className="App">
-               <Hello />
-              </div>
-            </>
-          );
-        }
+  ````js
+  import Hello from './Hello';
 
-        export default App;
-        ```
+      function App() {
+        return (
+          <>
+            <div className="App">
+             <Hello />
+            </div>
+          </>
+        );
+      }
 
-    ````
+      export default App;
+      ```
 
-1.  컴포넌트를 정의하는 방법
+  ````
+
+**2. 컴포넌트를 정의하는 방법**
 
 - JavaScript함수로 작성
   ```js
@@ -120,7 +123,7 @@ return React.createElement(
 ## props를 통해 데이터 전달하기
 
 **Q. 만약 각 페이지마다 컴포넌트 안의 내용을 조금씩 다르게 보여주고 싶다면?**
-→ props(properties)를 활용하면 사용자 정의 컴포넌트에 추가적인 값을 전달할 수 있다.
+props(properties)를 활용하면 사용자 정의 컴포넌트에 추가적인 값을 전달할 수 있다.
 props를 받아서 쓸 함수의 파라미터에 props를 쓰고 props.name과 같은 방식으로 값을 받아올 수 있다.
 props로 상위 컴포넌트에서 하위 컴포넌트로, 그리고 다시 props를 사용해서 더 안쪽에 있는 하위 컴포넌트로 데이터를 전달한다.
 
