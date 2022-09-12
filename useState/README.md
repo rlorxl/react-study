@@ -1,4 +1,4 @@
-#[48 ~ 66] 리액트 State 및 이벤트 다루기
+# [48 ~ 66] 리액트 State 및 이벤트 다루기
 
 ## useState
 
@@ -48,7 +48,7 @@ const ExpenseItem = props => {
 
 기본적으로 input에 `onChange`이벤트를 달아 input에 변화가 있을 때마다 감지가 가능하다.
 
-### 이전 state에 의존하는 state업데이트
+## 이전 state에 의존하는 state업데이트
 
 하나의 컴포넌트안에서 여러개의 state를 가지고 있는 것도 가능하다. 하지만 하나의 state를 가지고 있는 것과의 차이가 있다.
 
@@ -87,7 +87,7 @@ const titleChangeHandler = event => {
 ```
 
 <br>
-### 배열 렌더링 - map, key
+### 배열 렌더링하기
 
 ```js
 const App = () => {
