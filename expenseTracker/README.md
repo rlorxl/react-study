@@ -10,7 +10,7 @@ jsx : 자바스크립트를 확장한 문법
    fragment </> : 비어있는 태그 (불필요하게 div를 쓰지 않고 빈태그로 감싸기 위해 사용한다.)
    >
 3. jsx 내부에서 변수나 함수를 사용할 때는 중괄호`{}`를 사용하고,
-   중괄호 안에서는 기본적인 자바스크립트 코드를 실행할 수 있다.
+   중괄호 안에서는 **유효한 모든 자바스크립트 표현식을 넣을 수 있다.**
    ```js
    function App() {
      const name = 'react';
@@ -39,6 +39,18 @@ return React.createElement(
 
 두개 이상의 태그가 하나의 태그로 감싸져있어야 하는 이유
 → return뒤에는 하나의 문만 와야하기 때문에 래퍼가 필요한 것.
+
+- jsx도 표현식이다.
+  jsx를 if문 및 for문 안에 사용하고, 변수에 할당하고 함수로부터 반환할 수 있다.
+
+```js
+function getGreeting(user) {
+  if (user) {
+    return <h1>Hello, {formatName(user)}!</h1>;
+  }
+  return <h1>Hello, Stranger</h1>;
+}
+```
 
 ---
 
