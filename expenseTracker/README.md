@@ -4,7 +4,7 @@
 
 jsx : 자바스크립트를 확장한 문법
 
-1. 태그는 닫혀있어야 한다.   
+1. 태그는 닫혀있어야 한다.  
    `<div></div>` `<input />` `<Hello />`
 2. 두개 이상의 태그는 하나의 태그로 감싸져있어야 한다.  
    `function App() { return ( <> <Hello /> <div></div> </> ) }`.  
@@ -228,4 +228,19 @@ function ExpenseItem(props) {
 }
 
 export default ExpenseItem;
+```
+
+### 래퍼 컴포넌트에서 props 전달
+
+아래의 커스텀 컴포넌트 `Button`은 button요소를 반환하고 type과 onClick이벤트를 props에서 받은 값으로 설정하고 있다. 이것은 재사용이 가능한 커스텀 컴포넌트로 만들기 위함인데 상위 컴포넌트에서 `<Button type="submit">Add</Button>`과 같은 형태로 사용될 것이다.  
+여기서 `type="submit"`은 html요소의 어트리뷰트값 지정이 아닌 props.name과 값을 지정한 것이므로 주의하자. Button에서는 '찐' button요소의 type값을 props.type으로 지정하고 있다. props.children을 설정해서 상위 컴포넌트에서 텍스트 값을 지정해서 전달해주는것도 같은 이유에서이다.
+
+```js
+const Button = props => {
+  return (
+    <button type={props.type} className="button" onClick={props.onClick}>
+      {props.children}
+    </button>
+  );
+};
 ```
