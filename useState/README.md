@@ -173,9 +173,9 @@ const App = () => {
       <input type="text" />
           <button>Upload</button>
           
-      {names.map((name, idx) => {
+      {names.map((name, idx) => ( // *중괄호가 아닌 소괄호 사용에 주의
         return <p key={idx}>{name}</p>;
-      })}
+      ))}
     </div>
   );
 };
