@@ -59,3 +59,42 @@ input에 ref를 연결했다면 input은 항상 value를 가지고 있기 때문
 <br/>
 
 > ref로 DOM요소에 접근해서 조작하는 것이 가능하지만 조작하지 않는것이 좋다. DOM은 리액트에 의해서만 조작되어야 한다. ref는 단순히 데이터, 값을 가져오는 용도로만 사용하는것이 좋다.
+
+---
+
+## Ref 전달하기 - forwardRef
+
+### 부모 컴포넌트에게 DOM ref를 공개하기
+
+자식 컴포넌트의 ref를 자신의(부모) ref로서 외부에 노출시키게 한다. 부모 컴포넌트는 자식 컴포넌트에서 `React.forwardRef`를 통해 전달된 ref를 얻고, 그것을 렌더링되는 DOM으로 전달할 수 있다.
+
+> 보기 드문 경우지만, 부모 컴포넌트에서 자식 컴포넌트의 DOM 노드에 접근하려 하는 경우도 있습니다. 자식 컴포넌트의 DOM 노드에 접근하는 것은 컴포넌트의 캡슐화를 파괴하기 떄문에 권장되지 않습니다. 그렇지만 가끔가다 자식 컴포넌트의 DOM 노드를 포커스하는 일이나, 크기 또는 위치를 계산하는 일 등을 할 때에는 효과적인 방법이 될 수 있습니다. https://ko.reactjs.org/docs/refs-and-the-dom.html
+
+**예시) 자식 컴포넌트 이미지의 값을 가져오기**
+
+1. 예를 들어 CatParent.js 라는 부모 컴포넌트가 있을 때, 먼저 const catRef = useRef(); 와 같이 useRef()함수를 변수 설정하고 <Cat ref={catRef} /> ← 자식 컴포넌트에서 ref를 받아온다.
+2. 자식 컴포넌트 함수를 시작할 때 forwardRef 를 적고 props와 함께 ref도 적는다.
+3. 이미지의 값을 보내줄 것이므로 img태그안에 ref={ref} 를 작성한다.
+
+```js
+const Cat = forwardRef((props, ref) => {
+  console.log('자식 컴포넌트 Cat');
+  console.log(ref);
+
+  return (
+    <div>
+      <img
+        src="https://static01.nyt.com/images/2016/03/30/universal/ko/well_cat-korean/well_cat-superJumbo-v2.jpg?quality=90&auto=webp"
+        alt="cat"
+        style={{ width: '150px' }}
+        ref={ref}
+      ></img>
+    </div>
+  );
+});
+
+export default Cat;
+```
+
+`<button onClick={() => alert(catRef.current.height)}>고양이의 크기를 알고싶어</button>`
+→ 버튼을 눌렀을 때 alert으로 자식 컴포넌트에서 받아온 이미지의 height값이 나타난다.

@@ -116,4 +116,33 @@ const emailChangeHandler = event => {
 
 ---
 
-## Context
+## Context로 리팩토링하기 (중앙 state관리)
+
+전체state를 관리하는 context파일을 만들어 App.jsx컴포넌트를 state관리와 분리한다.
+context를 사용하면 어떤 컴포넌트에서도 전역적으로 관리되고 있는 상태값에 접근할 수 있다.
+예를 들어 로그인한 유저의 정보나 전체 테마 스타일 등등… 전역으로 관리해야 하는 값, 전역적으로 데이터를 전달해야 할 때 라던지...
+<br/>
+$$App.js → A → B → C → D$$
+
+_가장 상위의 App.js컴포넌트가 있고 그 하위로 → A → B → C → D 컴포넌트가 있을 때 App.js에서 D 컴포넌트로 state를 전달하려면 (D컴포넌트에서 App상태를 기반으로 무언가 해야할 때) props를 단계별로 하위 컴포넌트로 전달 전달해서 D컴포넌트까지 도달해야 한다. (prop drilling)_
+하지만 Context API를 사용한다면 상태를 관리하고 있는 컴포넌트에서 Context를 생성하면 하위 컴포넌트에서 단계별로 props를 전달하지 않아도 한번에 접근 권한이 생긴다.
+
+App컴포넌트는 이제 화면에 무언가를 그리는데에만 집중할 수 있다.
+index.jsx(main.jsx)의 App컴포넌트는 contextProvider로 감싼다.
+
+```js
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);
+```
+
+useContext는 컴포넌트별로 여러개를 만들 수 있는데,
+
+App → A → B → C → D  
+　　&nbsp;&nbsp;→ E → F → G → H
+
+같은 형식으로 컴포넌트 트리가 짜여있을 때 ‘A’ 컴포넌트에서 만든 context에는 E~H 컴포넌트는 접근할 수 없다.
+
+잦은 state변경이 있는경우 컨텍스트 사용은 그다지 적합하지 않다. (1초에 여러번, 매초마다 있는경우)
