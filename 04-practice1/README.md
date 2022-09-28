@@ -2,6 +2,8 @@
 
 ## Portals
 
+`import ReactDOM from 'react-dom';`
+
 Portal은 부모 컴포넌트의 DOM계층 구조 바깥에 있는 DOM노드로 자식을 렌더링하는 방법이다.
 보통 컴포넌트 렌더링 메서드에서 엘리먼트를 반환할 때 그 엘리먼트의 부모노드에서 가장 가까운 자식으로 DOM에 마운트된다. (#root)  
 그런데 DOM의 다른 위치, 이를테면 #root가 아닌 #overlay-root같은 div를 만들어 그 위치에 오버레이되는 요소(모달이나 툴팁 등)를 삽입하고 싶을 때가 있다.

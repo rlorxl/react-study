@@ -86,7 +86,8 @@ context API, redux와 함께 사용하는 경우가 많다.
 
 > 다른 state를 기반으로하는 state를 업데이트한다면 하나의 state로 병합하는것이 좋다. 이것은 useState에 객체를 설정해서 관리하는것이 가능하다. 하지만 state가 복잡하고 여러가지 관련된 state가 결합된 경우에는 useReducer를 고려해볼 수 있다.
 
-`import React, { useReduce } from 'react'`
+`import React, { useReducer } from 'react'`
+
 `const [state, dispatchFn] = useReducer(reducerFn, initialState, initFn)`
 
 - reducerFn : 리듀서 함수. 복잡한 state업데이트 로직을 포함하고 있다. 새 액션이 디스패치 될 때마다 리듀서 함수가 호출되고 최신의 state를 반환하도록 해준다.
@@ -146,3 +147,4 @@ App → A → B → C → D
 같은 형식으로 컴포넌트 트리가 짜여있을 때 ‘A’ 컴포넌트에서 만든 context에는 E~H 컴포넌트는 접근할 수 없다.
 
 잦은 state변경이 있는경우 컨텍스트 사용은 그다지 적합하지 않다. (1초에 여러번, 매초마다 있는경우)
+컨텍스트를 사용하면 컴포넌트의 재사용이 어려워질 수 있기 때문에 꼭 필요한 곳에만 적용하도록 하자.
