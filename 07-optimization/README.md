@@ -1,4 +1,4 @@
-# A Look Behind The Scenes Of React & Optimization Techniques
+# [159~170] A Look Behind The Scenes Of React & Optimization Techniques
 
 ## useMemo
 
@@ -81,4 +81,43 @@ const someFunction = useCallback(() => {
 useEffect(() => {
   console.log('someFunction이 변경되었습니다.');
 }, [someFunction]);
+```
+
+### http요청에서 useCallback사용
+
+```js
+useEffect(() => {
+  fetchMoviesHandler();
+}, [fetchMoviesHandler]);
+```
+
+의존성 배열이 빈 배열이면 첫 렌더링시에도 데이터를 불러오기 때문에 의존성 배열에 의존성으로서 포인터를 추가해야한다. 여기서는 fetchMoviesHandler함수를 추가하면 되는데,(http요청하는 함수) 문제는 함수는 컴포넌트가 재 렌더링 될 때마다 새로운 함수로 인식이 되기 때문에 이를 의존성으로 추가한다면 무한 루프가 발생한다. 해결하기 위해 useCallback으로 fetchMoviesHandler함수를 감싼다.
+
+```js
+const fetchMoviesHandler = useCallback(async () => {
+  setIsLoading(true);
+  setError(null);
+  try {
+    const response = await fetch('https://swapi.dev/api/film');
+
+    if (!response.ok) {
+      throw new Error('Something went wrong!');
+    }
+
+    const data = await response.json();
+    const transformedMovies = data.results.map(movieData => {
+      return {
+        id: movieData.episode_id,
+        title: movieData.title,
+        openingText: movieData.opening_crawl,
+        releaseDatee: movieData.release_date,
+      };
+    });
+
+    setMovies(transformedMovies);
+  } catch (error) {
+    setError(error.message); // 'Something went wrong!'
+  }
+  setIsLoading(false);
+}, []);
 ```
