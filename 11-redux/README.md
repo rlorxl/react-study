@@ -77,6 +77,7 @@ export default store;
 ```
 
 <br/>
+
 ### 제공자 - Provider
 
 `import { Provider } from 'react-redux';`
@@ -88,6 +89,7 @@ export default store;
 보내줄 state를 제공받을 컴포넌트들을 감싸는 울타리의 역할. Provider를 import한 뒤 제공하고자 하는 컴포넌트 (여기서는 최상위)를 감싼다. store의 밸류로 들어간 store는 import해 온 store.
 
 <br/>
+
 ### useSelector
 
 스토어가 관리하는 데이터에 접근할 수 있게하는 hook.  
