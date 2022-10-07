@@ -3,11 +3,12 @@
 `npm install redux`
 
 `npm install redux react-redux`
-: 리액트 앱에서 리덕스 스토어, 리듀서에 접속하여 컴포넌트를 구독할 수 있도록 돕는 패키지.
 
-리듀서 함수는 리덕스 라이브러리에 의해 호출된다.
+- 리액트 앱에서 리덕스 스토어, 리듀서에 접속하여 컴포넌트를 구독할 수 있도록 돕는 패키지.
 
-리듀서 함수는 2개의 파라미터를 받는데, '기존의 상태'와 '액션'이다.
+- 리듀서 함수는 리덕스 라이브러리에 의해 호출된다.
+
+- 리듀서 함수는 2개의 파라미터를 받는데, '기존의 상태'와 '액션'이다.
 
 > Inputs: Old State + Dispatched Action
 
@@ -17,7 +18,7 @@
 
 ### redux 기본설정
 
-1. node용 리덕스 스토어
+**1. node용 리덕스 스토어**
 
 ```js
 const redux = require('redux');
@@ -53,7 +54,7 @@ store.dispatch({ type: 'increment' });
 store.dispatch({ type: 'decrement' });
 ```
 
-2. 리액트용 리덕스 스토어
+**2. 리액트용 리덕스 스토어**
 
 ```js
 import { createStore } from 'redux';
@@ -75,6 +76,7 @@ const store = createStore(counterReducer);
 export default store;
 ```
 
+<br/>
 ### 제공자 - Provider
 
 `import { Provider } from 'react-redux';`
@@ -83,11 +85,13 @@ export default store;
 
 `<Provider store={store}><App /></Provider>`
 
-Provider를 import한 뒤 제공하고자 하는 컴포넌트 (여기서는 최상위)를 감싼다. store의 밸류로 들어간 store는 import해 온 store.
+보내줄 state를 제공받을 컴포넌트들을 감싸는 울타리의 역할. Provider를 import한 뒤 제공하고자 하는 컴포넌트 (여기서는 최상위)를 감싼다. store의 밸류로 들어간 store는 import해 온 store.
 
+<br/>
 ### useSelector
 
-스토어가 관리하는 데이터에 접근할 수 있게하는 hook.
+스토어가 관리하는 데이터에 접근할 수 있게하는 hook.  
+스토어의 상태값을 반환해주는 역할을 한다. useSelector를 사용한 함수에서 리덕스 스토어의 상태값이 바뀐 경우 ( 버튼 클릭 등의 이벤트를 통해 액션이 실행되어 상태값이 변경된 경우) 바뀐 스토어의 상태값을 다시 가져와 컴포넌트를 렌더링 시킨다.
 
 `const counter = useSelector(state => state.counter)`
 
