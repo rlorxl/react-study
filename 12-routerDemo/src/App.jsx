@@ -1,10 +1,10 @@
 // import { Route, Routes } from 'react-router-dom';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import Welcome from './pages/Welcome';
-import Products from './pages/Products';
-import MainHeader from './components/MainHeader';
-import ProductDetail from './pages/ProductDetail';
+import Welcome from "./pages/Welcome";
+import Products from "./pages/Products";
+import MainHeader from "./components/MainHeader";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
@@ -24,7 +24,6 @@ function App() {
           <Route path="/products/:productId">
             <ProductDetail />
           </Route>
-          
         </Switch>
       </main>
     </>

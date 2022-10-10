@@ -1,26 +1,29 @@
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
+import LoadingSpinner from "../UI/LoadingSpinner";
 import useHttp from "../../hooks/use-http";
 import { addComment } from "../../lib/api";
 import classes from "./NewCommentForm.module.css";
 
 const NewCommentForm = (props) => {
   const commentTextRef = useRef();
-
   const { sendRequest, status, error } = useHttp(addComment);
+
+  const { onAddedComment } = props;
+
+  useEffect(() => {
+    if (status === "completed" && !error) {
+      onAddedComment(); // get all comment
+    }
+  }, [status, error, onAddedComment]);
 
   const submitFormHandler = (event) => {
     event.preventDefault();
 
     const enteredText = commentTextRef.current.value;
 
-    useEffect(() => {
-      if (status === "completed" && !error) {
-      }
-    }, [status]);
-
-    sendRequest({ text: enteredText });
+    // add comment
+    sendRequest({ commentData: { text: enteredText }, quoteId: props.quoteId });
   };
 
   return (

@@ -20,9 +20,9 @@ const QuoteList = (props) => {
   const history = useHistory();
   const location = useLocation();
 
-  // console.log(location) // location객체를 반환.
+  // console.log(location);
 
-  const queryParams = new URLSearchParams(location.search); // '?'뒤의 경로가 나온다.
+  const queryParams = new URLSearchParams(location.search);
 
   const isSortingAscending = queryParams.get("sort") === "asc";
 
@@ -31,7 +31,7 @@ const QuoteList = (props) => {
   const changeSortingHandler = () => {
     history.push({
       pathname: location.pathname,
-      search: `?sort=${isSortingAscending ? "desc" : "asc"}`, // url변경 (?sort=asc는 쿼리매개변수임.)
+      search: `?sort=${isSortingAscending ? "desc" : "asc"}`,
     });
   };
 

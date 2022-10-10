@@ -4,9 +4,9 @@
 하지만 싱글 페이지 어플리케이션은 기본적으로 url변경이 일어나지 않기 때문에 항상 첫번째 페이지만을 로드한다.  
 리액트 라우터는 경로를 처리할 수 있도록 도와서 경로에 맞는 컴포넌트를 렌더링 하도록 한다.
 
-## react-router
+## react-router(ver.5)
 
-`npm install react-router-dom@5` (ver.5)
+`npm install react-router-dom@5`
 
 `import { Route } from 'react-router-dom`
 
@@ -40,7 +40,7 @@ App을 렌더링하는 index.js파일에서 `BrowserRouter` import하기.
 `import { Link } from 'react-router-dom'`
 
 ```js
-<Link to="/welcome">Welcome</Link>
+<Link to='/welcome'>Welcome</Link>
 ```
 
 **2. NavLink**
@@ -50,12 +50,12 @@ Link를 NavLink로 바꾸고 `activeClassName`만 추가해주면 된다. css파
 
 ---
 
-## useParams
+### useParams
 
 기본경로 뒤에 /:세부 경로 를 붙일 수 있다.
 
 ```js
-<Route path="/product/:productId">
+<Route path='/product/:productId'>
   <ProductDetail />
 </Route>
 ```
@@ -71,15 +71,15 @@ Link를 NavLink로 바꾸고 `activeClassName`만 추가해주면 된다. css파
 해결방법은 React-router-dom에서 제공하는 **Switch컴포넌트**를 사용할 수 있다.  
 스위치 컴포넌트는 라우트 컴포넌트 주위에 래핑하고 위부터 아래로 읽었을 때 경로와 가장 먼저 매칭되는 라우트가 활성화된다.
 
-```jss
+```js
 <Switch>
-  <Route path="/welcome">
+  <Route path='/welcome'>
     <Welcome />
   </Route>
-  <Route path="/products" exact>
+  <Route path='/products' exact>
     <Products />
   </Route>
-  <Route path="/products/:productId">
+  <Route path='/products/:productId'>
     <ProductDetail />
   </Route>
 </Switch>
@@ -95,7 +95,7 @@ exact는 라우터와 정확히 일치하는 경우에만 작동한다.
 ```js
 <section>
   <h1>Welcome</h1>
-  <Route path="/welcome/new-user">
+  <Route path='/welcome/new-user'>
     // welcome컴포넌트 내부에서 라우트를 다시 정의할 수 있다. welcome페이지가
     활성화되어있는 경우에만 이 라우트가 평가된다.
     <p>Welcome, new user!</p>
@@ -108,9 +108,9 @@ exact는 라우터와 정확히 일치하는 경우에만 작동한다.
 `import { Redirect } from 'react-router-dom';`
 
 ```js
-<Route path="/" exact>
+<Route path='/' exact>
   // 경로가 '/'인 경우에 '/welcome'으로 경로를 다시 보낸다.
-  <Redirect to="/welcome" />
+  <Redirect to='/welcome' />
 </Route>
 ```
 
@@ -125,10 +125,146 @@ exact는 라우터와 정확히 일치하는 경우에만 작동한다.
 <Prompt
   when={isEntering}
   message={(location) =>
-    "Are you sure you wnat to leave? All your entered data will be lost!"
+    'Are you sure you wnat to leave? All your entered data will be lost!'
   }
 />
 ```
 
 - when : 사용자가 url을 변경하는 경우 프롬프트가 표시되어야 하는지 여부를 찾기 위해 true나 false를 전달.
 - message : 사용자가 나가려고 할 때 보여주고 싶은 텍스트(위치 객체를 얻는 함수)
+
+---
+
+## react-router(ver.6)
+
+`npm install react-router-dom@lastest`
+
+### ver.5와 달라진점
+
+**1. Switch → Routes**
+
+Switch가 Routes로 대체되었다.
+
+**2. element prop**
+
+라우트에서 element prop을 더하면 동적 값을 요소에 넘겨주고 JSX형태로 렌더링 된다.
+
+```js
+<Routes>
+  <Route path='/welcome' element={<Welcome />} />
+  <Route path='/products' element={<Products />} />
+  <Route path='/products/:productId' element={<ProductDetail />} />
+</Routes>
+```
+
+**3. exact(X)**
+
+ver.5에서는 정확히 일치하는 경로를 찾기위해 exact prop이 필요했지만 ver.6에서는 항상 정확히 일치하는 경로를 찾는다.
+
+**4. activeClassName (x)**
+
+```js
+// ver.5
+<NavLink activeClassName={classes.active} to='/welcome'>
+  Welcome
+</NavLink>
+```
+
+```js
+// ver.6
+<NavLink
+  className={(navData) => (navData.isActive ? classes.active : '')}
+  to='/welcome'
+>
+  Welcome
+</NavLink>
+```
+
+**5. Redirect → Navigate**
+
+```js
+// ver.5
+<Route path='/'>
+  <Redirect to='/welcome' />
+</Route>
+```
+
+```js
+// ver.6
+<Route path='/' element={<Navigate to='/welcome' />} />
+```
+
+**6. 중첩 라우팅**
+
+- Routes랩핑은 필수  
+  라우트가 하나밖에 존재하지 않더라도 (예: 중첩 라우트) Routes로 랩핑하는 것이 필수적이다.
+
+- 중첩 라우팅 로직 변화
+
+  ```js
+  // 상위 컴포넌트
+
+  <Routes>
+    // 중첩 라우트가 존재하는 컴포넌트로 라우트된다면 '*' 붙여주기
+    <Route path='/welcome/*' element={<Welcome />} />
+    <Route path='/products' element={<Products />} />
+    <Route path='/products/:productId' element={<ProductDetail />} />
+  </Routes>
+  ```
+
+  ```js
+  // Welcome
+  <Routes>
+    <Route path='new-user' element={<p>Welcome, new user!</p>} />
+  </Routes>
+  // '/welcome/'은 더 이상 필요하지 않음.
+  ```
+
+  아니면 상위 컴포넌트에서 중첩 라우팅을 한번에 정의할 수도 있다.
+
+  ```js
+  <Routes>
+    <Route path='/welcome/*' element={<Welcome />}>
+      <Route path='new-user' element={<p>Welcome, new user!</p>} />
+    </Route>
+    <Route path='/products' element={<Products />} />
+    <Route path='/products/:productId' element={<ProductDetail />} />
+  </Routes>
+  ```
+
+  이렇게 상위에서 라우트를 한번에 중첩해서 쓰고,  
+  중첩 컨텐츠가 DOM 어느 위치에 위치해야 하는지 지정해주려면 react-router-dom의 구성 요소인 `Outlet`으로 추가해 줄 수 있다.
+
+  ```js
+  // Welcome
+  import { Link, Outlet } from 'react-router-dom';
+
+  const Welcome = () => {
+    return (
+      <section>
+        <h1>The Welcome Page</h1>
+        <Link to='new-user'>New User</Link>
+        <Outlet />
+      </section>
+    );
+  };
+  ```
+
+**7. useHistory의 대안**
+
+ver.6에서는 더 이상 useHistory를 지원하지 않는다.
+대신 경로를 이동할 때 `useNavigate`를 사용한다.
+
+```js
+import { useNavegate } from 'react-router-dom';
+
+const navigate = useNavigate();
+
+navigate('/welcome', {
+  state: { id: 1, description: test },
+});
+```
+
+2번째 파라미터로 데이터를 같이 넘겨줄 수 있고 데이터를 받을 때는 역시 useLocation으로 location을 취득한다.
+
+**8. prompt기능이 없어짐**
